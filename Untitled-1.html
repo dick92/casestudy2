@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GiangHoMom</title>
+
+</head>
+<img src="gianghomom.jpg" id="logo">
+<style>
+    #logo{
+    width: 100%;
+    height: 280px;
+    
+}
+table{
+    background-color: red;
+}
+#id1{
+    text-align: center;
+    background-color: wheat;
+    color: black;
+}
+h1{
+    text-align: center; font-size: 50px;
+    background-color: darkseagreen;
+    color: black;
+    margin: 0;
+}
+th , td {
+    text-align: center;
+}
+</style>
+
+<h1> QUẢN LÝ GIANG HỒ MÕM VN </h1>
+<table style=" border: 1px solid black; width: 700px; float: right">
+    <tr>
+        <th style="font-size: 50px" colspan="7">Danh Sách Giang Hồ Mõm VN</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Họ Và tên</th>
+        <th>Ngày sinh</th>
+        <th>Giới tính</th>
+        <th>Lớp</th>
+        <th>Ảnh</th>
+        <th>Tùy chọn</th>
+    </tr>
+    <tbody id="list-student">
+    </tbody>
+</table>
+
+<table border="1" style="width: 300px; height: 500px" ;>
+    <tr id="id1">
+        <th colspan="2"> Thông tin giang hồ mõm</th>
+    </tr>
+
+    <tr>
+        <th>ID</th>
+        <td><input type="number" id="id"></td>
+
+    </tr>
+    <tr>
+        <th>name</th>
+        <td><input type="text" id="fullname"></td>
+    </tr>
+    <tr>
+        <th>date</th>
+        <td><input type="text" id="date"></td>
+    </tr>
+    <tr>
+        <th>sex</th>
+        <td><input type="text" id="gender"></td>
+    </tr>
+    <tr>
+        <th>class</th>
+        <td><input type="text" id="grade"></td>
+    </tr>
+    <tr>
+        <th>Photo</th>
+        <td><input type="text" id="img"></td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>
+            <button style="background-color: purple" id="add" onclick="addStudent()">Add</button>
+            <button style="background-color: purple" id="edit" onclick="updateStudent()">Save</button>
+        </td>
+    </tr>
+<script>
+    class StudentManagement {
+    constructor(arr) {
+        this.students = arr;
+    }
+    showList() {
+        let table = '';
+        for (let i = 0; i < this.students.length; i++) {
+
+
+            table += '<tr>';
+            table += '<td>';
+            table += this.students[i].id;
+            table += '</td>';
+
+            table += '<td>';
+            table += this.students[i].fullname;
+            table += '</td>';
+
+            table += '<td>';
+            table += this.students[i].date;
+            table += '</td>';
+
+            table += '<td>';
+            table += this.students[i].gender;
+            table += '</td>';
+
+            table += '<td>';
+            table += this.students[i].grade;
+            table += '</td>';
+
+            table += '<td>';
+            table += '<img width="100px" height="100px" src=" '+this.students[i].img+'">';
+            table += '</td>';
+
+            table += '<td>' +
+                '<button style="background-color: red; color: white "  type="button" onclick="deleteStudent('+i+')">Delete</button> ' +
+                ' <button  style="background-color: orange ; color: white" type="button" onclick="editStudent('+i+')">Edit</button>' +
+                '</td>';
+
+            table += '</tr>';
+        }
+        document.getElementById('list-student').innerHTML = table;
+    }
+
+    addStudent(student) {
+        this.students.push(student);
+    }
+
+    delete(id) {
+        this.students.splice(id, 1);
+    }
+
+    findStudentById(id){
+        return this.students[id];
+    }
+
+    edit(student,id, fullname, date, gender, grade, img){
+        student.edit(id, fullname, date,gender, grade, img);
+    }
+
+}
+class Student {
+    constructor (id, fullname, date, gender, grade, img) {
+        this.id= id;
+        this.fullname= fullname;
+        this.date= date;
+        this.gender= gender;
+        this.grade= grade;
+        this.img = img;
+    }
+    getID() {
+        return this.id;
+    }
+    getFullname() {
+        return this.fullname;
+    }
+    getDate() {
+        return this.date;
+    }
+    getGender(){
+        return this.gender;
+    }
+    getGrade() {
+        return this.grade;
+
+    }
+    getImg() {
+        return this.img;
+    }
+    setID(id) {
+        this.id=id;
+    }
+    setFullname(fullname) {
+        this.fullname=fullname;
+    }
+    setDate(date) {
+        this.date=date;
+    }
+    setGender(gender){
+        this.gender=gender;
+    }
+    setGrade(grade) {
+        this.grade=grade;
+    }
+    setImg(img){
+        this.img=img;
+    }
+
+    edit(id, fullname, date,gender, grade, img){
+        this.id = id;
+        this.fullname = fullname;
+        this.date = date;
+        this.gender = gender;
+        this.grade = grade;
+        this.img = img
+    }
+}
+let student = new Student('011', "Lê Hồng Phúc", '23/01/2003', 'Nam','C0324','https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/438222736_1044131683902336_5281833169422018132_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=1LFICZD8f9MQ7kNvgEdnr9Y&_nc_ht=scontent.fdad1-4.fna&oh=00_AYANv_TLKxjElwxVHYRB1yd72K93P0jK9Ifs_39hYqi9Pg&oe=6656792A' );
+let student1 = new Student('012','Bùi Xuân Huấn','05/02/1998','Nam', 'Huấn rose','https://s.memehay.com/files/posts/20210515/toan-bo-loi-ran-day-cua-huan-hoa-hong-huan-rose.jpg');
+let student2 = new Student('023','Khánh Sky','22/01/2000','Nam','C0324','https://i.ytimg.com/vi/5-xHE26hHAY/maxresdefault.jpg');
+let student3 = new Student('024','Thông Soái Ca','22/01/2004','Nam',' C0324','https://gamek.mediacdn.vn/133514250583805952/2022/3/30/photo-1-1648633413160933067487.jpg');
+
+let arr =[student, student1, student2,student3];
+let manage = new StudentManagement(arr);
+
+function addStudent(){
+    let id = document.getElementById('id').value;
+    let name = document.getElementById('fullname').value;
+    let date = document.getElementById('date').value;
+    let gender = document.getElementById('gender').value;
+    let grade = document.getElementById('grade').value;
+    let img = document.getElementById('img').value;
+
+    let student = new Student(id,name,date,gender,grade,img);
+    manage.addStudent(student);
+    manage.showList();
+    clear();
+}
+
+function clear(){
+    document.getElementById('id').value = '';
+    document.getElementById('fullname').value = '';
+    document.getElementById('date').value = '';
+    document.getElementById('gender').value = '';
+    document.getElementById('grade').value = '';
+    document.getElementById('img').value= '';
+}
+
+function deleteStudent(id) {
+        manage.delete(id);
+        manage.showList();
+}
+
+let studentId = 0;
+function editStudent(id){
+    let student = manage.findStudentById(id);
+    document.getElementById('id').value = student.id;
+    document.getElementById('fullname').value = student.fullname;
+    document.getElementById('date').value = student.date;
+    document.getElementById('gender').value = student.gender;
+    document.getElementById('grade').value = student.grade;
+    document.getElementById('img').value = student.img;
+
+    studentId = id;
+}
+
+function updateStudent(){
+    let id = document.getElementById('id').value;
+    let name = document.getElementById('fullname').value;
+    let date = document.getElementById('date').value;
+    let gender = document.getElementById('gender').value;
+    let grade = document.getElementById('grade').value;
+    let img = document.getElementById('img').value;
+
+    let student = manage.findStudentById(studentId);
+    manage.edit(student,id,name,date,gender,grade, img);
+    manage.showList();
+    clear();
+}
+
+manage.showList();
+
+
+
+
+
+</script>    
+
+   
+</table>
